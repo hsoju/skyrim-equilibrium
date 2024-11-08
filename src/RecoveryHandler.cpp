@@ -13,7 +13,7 @@ bool RecoveryHandler::ApplyRecovery(bool use_left_hand, RE::ActorValueOwner* av_
 	RE::ActorValue drain_value = use_left_hand ? left_value : right_value;
 	float current_drain_value = av_owner->GetActorValue(drain_value);
 	if (current_drain_value > 2.0f) {
-		av_owner->RestoreActorValue(RE::ACTOR_VALUE_MODIFIER::kDamage, RE::ActorValue::kMagicka, drain_amount);
+		av_owner->RestoreActorValue(RE::ACTOR_VALUE_MODIFIER::kDamage, RE::ActorValue::kMagicka, regen_amount);
 		av_owner->RestoreActorValue(RE::ACTOR_VALUE_MODIFIER::kDamage, drain_value, -drain_amount);
 		return true;
 	}

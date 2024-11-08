@@ -12,7 +12,8 @@ private:
 	RE::ActorValue left_hand_alternate_value = RE::ActorValue::kHealth;
 	bool use_fallback = false;
 
-	float drain_amount = 0.75f;
+	float regen_amount = 0.75f;
+	float drain_amount = 1.25f;
 
 	std::unordered_map<bool, std::string> graph_variable_map = { { true, std::string("bWantCastLeft") },
 		{ false, std::string("bWantCastRight") } };

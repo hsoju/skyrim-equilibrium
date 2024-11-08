@@ -81,10 +81,7 @@ bool SetupRecoveryHandler();
 void MessageHandler(SKSE::MessagingInterface::Message* a_msg)
 {
 	switch (a_msg->type) {
-	case SKSE::MessagingInterface::kNewGame:
-		SetupInputTracker();
-		break;
-	case SKSE::MessagingInterface::kPostLoadGame:
+	case SKSE::MessagingInterface::kInputLoaded:
 		SetupInputTracker();
 		break;
 	}

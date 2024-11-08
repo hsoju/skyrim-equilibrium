@@ -31,22 +31,16 @@ public:
 
 	static bool Register()
 	{
-		ready_to_cast = false;
-		right_down = false;
-		left_down = false;
-		if (!inputs_tracked) {
-			static InputEventHandler singleton;
+		static InputEventHandler singleton;
 
-			auto input_manager = RE::BSInputDeviceManager::GetSingleton();
-			if (!input_manager) {
-				logger::error("Input event source not found");
-				return false;
-			}
-			input_manager->AddEventSink(&singleton);
-			logger::info("Registered {}", typeid(singleton).name());
-			inputs_tracked = true;
-			return true;
+		auto input_manager = RE::BSInputDeviceManager::GetSingleton();
+		if (!input_manager) {
+			logger::error("Input event source not found");
+			return false;
 		}
-		return false;
+		input_manager->AddEventSink(&singleton);
+		logger::info("Registered {}", typeid(singleton).name());
+		inputs_tracked = true;
+		return true;
 	}
 };

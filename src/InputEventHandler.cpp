@@ -23,10 +23,10 @@ void InputEventHandler::HandleInitialInput(RE::InputEvent* const* a_event)
 			const auto& given_user = given_id->userEvent;
 			const auto user_events = RE::UserEvents::GetSingleton();
 
-			if (given_user == user_events->rightAttack) {
+			if (!right_down && given_user == user_events->rightAttack) {
 				CheckInitialInput(right_down, recovery_handler->right_ready_graph_variable);
 				break;
-			} else if (given_user == user_events->leftAttack) {
+			} else if (!left_down && given_user == user_events->leftAttack) {
 				CheckInitialInput(left_down, recovery_handler->left_ready_graph_variable);
 				break;
 			}
@@ -39,11 +39,16 @@ void InputEventHandler::CheckHeldInput(const RE::ButtonEvent* given_button, bool
 	if (given_button->IsUp()) {
 		bool& hand_down = use_left_hand ? left_down : right_down;
 		hand_down = false;
+		recovery_handler->has_recovered_map[use_left_hand] = false;
 		if (!right_down && !left_down) {
 			ready_to_cast = false;
 		}
 	} else {
-		recovery_handler->CheckCast(use_left_hand);
+		if (!(right_down && left_down)) {
+			recovery_handler->CheckCast(use_left_hand);
+		} else {
+			recovery_handler->CheckDualCast(use_left_hand);
+		}
 	}
 }
 

@@ -24,6 +24,9 @@ public:
 		if (!ready_to_cast) {
 			HandleInitialInput(a_event);
 		} else {
+			if (!right_down || !left_down) {
+				HandleInitialInput(a_event);
+			}
 			HandleHeldInput(a_event);
 		}
 		return RE::BSEventNotifyControl::kContinue;
@@ -34,6 +37,7 @@ public:
 		static InputEventHandler singleton;
 
 		auto input_manager = RE::BSInputDeviceManager::GetSingleton();
+
 		if (!input_manager) {
 			logger::error("Input event source not found");
 			return false;
